@@ -51,6 +51,7 @@ module.exports = {"data": {
         }
         if(member.roles.cache.find(_role => _role === role)) {
             await member.roles.remove(role);
+            console.log(`role.js> Successfully unassigned ${role.id}:${role.name} to ${member.id}:${member.user.tag}\n`);
             return await menu(interaction, [{
                 "embeds": [{
                     "title": "✅ Role unassigned successfully",
@@ -60,7 +61,7 @@ module.exports = {"data": {
             }]);
         }
         await member.roles.add(role);
-        console.log(`Successfully assigned ${role.id}:${role.name} to ${member.id}:${member.user.tag}\n`);
+        console.log(`role.js> Successfully assigned ${role.id}:${role.name} to ${member.id}:${member.user.tag}\n`);
         return await menu(interaction, [{
             "embeds": [{
                 "title": "✅ Role assigned successfully",
