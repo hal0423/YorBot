@@ -16,7 +16,8 @@ const setNameOnVtuber = (vtuber) => {
 
 const getVtuberWiki = async (name) => {
     let vtuber = await wiki(name);
-    console.log("vtuber-fetch.js> Successfully loaded vtuber object from vtuber-wiki")
+    if(!vtuber) return;
+    console.log("vtuber-fetch.js> Successfully loaded " + vtuber.more + " object from vtuber-wiki");
     await setColorOnVtuber(vtuber);
     setNameOnVtuber(vtuber);
     return vtuber;

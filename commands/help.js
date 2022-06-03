@@ -7,8 +7,8 @@ module.exports = {
     "execute": async (interaction) => {
         return await menu(interaction, [{
             "embeds": [{
-                "title": "📖 Help",
-                "description": "Loidy san to anya chan ga daisuki",
+                "title": "📖 dm saki",
+                "description": "dm saki",
                 "color": "#ff007f"
             }]
         }]);
