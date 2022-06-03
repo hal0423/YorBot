@@ -9,14 +9,10 @@ for (const file of fs.readdirSync("./commands").filter(_file => _file.endsWith("
     commands.push(command);
 }
 client.on("ready", async () => {
-    // await client.application.commands.set(commands.map(_command => _command.data));
     console.log(`discord>Logged in as ${client.user.tag}`);
     }
 );
 client.login(process.env.TOKEN);
-// client.on('message', (msg) => {
-//     if (msg.content === 'yor') msg.reply('nigger');
-// });
 client.on("interactionCreate", async (interaction) => {
     if (interaction.isCommand()) {
         try {
