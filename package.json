@@ -15,7 +15,9 @@
     "discord-api-types": "^0.33.2",
     "discord.js": "^13.7.0",
     "dotenv": "^16.0.1",
+    "fast-average-color-node": "^2.2.0",
     "fs": "^0.0.1-security",
-    "node-fetch": "^3.2.5"
+    "urldecode": "^1.0.1",
+    "vtuber-wiki": "^1.1.5"
   }
 }

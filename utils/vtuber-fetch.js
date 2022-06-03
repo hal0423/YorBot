@@ -1,45 +1,27 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const endpointURL = "https://api.ihateani.me/v2/graphql";
+const { wiki } = require("vtuber-wiki");
+const { getAverageColor } = require('fast-average-color-node');
+const decode = require('urldecode');
 
-const gqlSchemas = `query($cursor: String) {
-	vtuber {
-		channels(cursor: $cursor, platforms: [youtube], sort_by: "statistics.subscriberCount", sort_order: desc) {
-			items {
-				id
-				en_name
-				image
-				group
-			}
-			pageInfo {
-				nextCursor
-				hasNextPage
-			}
-		}
-	}
-}`
-
-const getChannels = async (cursor = "") => {
-	return await fetch(endpointURL, {
-		"method": "POST",
-		"headers": {
-			"Content-Type": "application/json",
-			"Accept": "application/json"
-		},
-		"body": JSON.stringify({
-			"query": gqlSchemas,
-			"variables": {"cursor": cursor}
-		})
-	}).then((res) => res.json());
+const setColorOnVtuber = async (vtuber) => {
+    vtuber.color = (await getAverageColor(vtuber.image_url)).hex;
+    console.log("vtuber-fetch.js> Vtuber color has successfully set to " + vtuber.color);
 }
 
-const getAllChannelsAsync = async (cursor = "") => {
-	let results = await getChannels(cursor);
-	// console.log(results);
-	let gqlres = results.data.vtuber;
-	let mainResults = gqlres.channels.items;
-	let pageData = gqlres.channels.pageInfo;
-	if (pageData.hasNextPage && pageData.nextCursor) return mainResults.concat(await getAllChannelsAsync(pageData.nextCursor));
-	else return mainResults;
+const setNameOnVtuber = (vtuber) => {
+    const url = decode(vtuber.more);
+    const index = url.indexOf("wiki/");
+    vtuber.oshiName = url.substring(index + 5).replaceAll("_", " ");
+    console.log("vtuber-fetch.js> Vtuber name has successfully set to " + vtuber.oshiName);
 }
 
-module.exports = { "getAllChannelsAsync": getAllChannelsAsync }
+const getVtuberWiki = async (name) => {
+    let vtuber = await wiki(name);
+    console.log("vtuber-fetch.js> Successfully loaded vtuber object from vtuber-wiki")
+    await setColorOnVtuber(vtuber);
+    setNameOnVtuber(vtuber);
+    return vtuber;
+}
+
+module.exports = {
+    "getVtuberWiki" :  getVtuberWiki
+}
