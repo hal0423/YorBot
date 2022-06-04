@@ -61,7 +61,7 @@ module.exports = {"data": {
         }]);
     }
     await member.roles.add(role);
-    console.log(`role.js> Successfully assigned ${role.id}:${role.name} to ${member.id}:${member.user.tag}\n`);
+    console.log(`role.js> Successfully assigned ${role.id}:${role.name} to ${member.id}:${member.name}\n`);
     return await menu(interaction, [{
         "embeds": [{
             "title": "✅ Role assigned successfully",
