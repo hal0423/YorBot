@@ -1,5 +1,6 @@
 const menu = require.main.require("./utils/menu.js");
 const { getVtuberWiki } = require.main.require("./utils/vtuber-fetch.js");
+require('log-timestamp');
 const options = [{ "name": "oshi_name",
                     "description": "Enter your Oshi name",
                     "type": 3,
@@ -11,6 +12,7 @@ module.exports = {"data": {
     "options": options
     }, "execute": async (interaction) => {
     if(!interaction.guild.me.permissions.has("MANAGE_ROLES")) {
+        console.error(`role.js> INSUFFICIENT PERMISSION INVOKED IN ${interaction.guild.name} by ${interaction.member.name}`);
         return await menu(interaction, [{
             "embeds": [{
                 "title": "❌ Bot has insufficient permissions to perform this action",
@@ -61,7 +63,7 @@ module.exports = {"data": {
         }]);
     }
     await member.roles.add(role);
-    console.log(`role.js> Successfully assigned ${role.id}:${role.name} to ${member.id}:${member.name}\n`);
+    console.log(`role.js> Successfully assigned ${role.id}:${role.name} to ${member.user.id}:${member.user.tag}\n`);
     return await menu(interaction, [{
         "embeds": [{
             "title": "✅ Role assigned successfully",

@@ -1,7 +1,7 @@
 const { wiki } = require("vtuber-wiki");
 const { getAverageColor } = require('fast-average-color-node');
 const decode = require('urldecode');
-
+require('log-timestamp');
 const setColorOnVtuber = async (vtuber) => {
     vtuber.color = (await getAverageColor(vtuber.image_url)).hex;
     console.log("vtuber-fetch.js> Vtuber color has successfully set to " + vtuber.color);
